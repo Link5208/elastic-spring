@@ -9,6 +9,8 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.IndexOperations;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 
+import com.elastic.elastic_spring.entity.Customer;
+import com.elastic.elastic_spring.entity.Movie;
 import com.elastic.elastic_spring.entity.Review;
 
 public class IndexOperationsTest extends AbstractTest {
@@ -29,6 +31,20 @@ public class IndexOperationsTest extends AbstractTest {
 		var indexOperations = this.elasticsearchOperations.indexOps(Review.class);
 		Assertions.assertTrue(indexOperations.create());
 		this.verify(indexOperations, 2, 2);
+	}
+
+	@Test
+	public void createIndexWithSettingsAndMapping() {
+		var indexOperations = this.elasticsearchOperations.indexOps(Customer.class);
+		Assertions.assertTrue(indexOperations.createWithMapping());
+		this.verify(indexOperations, 3, 0);
+	}
+
+	@Test
+	public void createIndexWithFieldMapping() {
+		var indexOperations = this.elasticsearchOperations.indexOps(Movie.class);
+		Assertions.assertTrue(indexOperations.createWithMapping());
+		this.verify(indexOperations, 1, 1);
 	}
 
 	private void verify(IndexOperations indexOperations, int expectedShards, int expectedReplicas) {
