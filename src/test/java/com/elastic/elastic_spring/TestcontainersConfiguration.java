@@ -15,7 +15,6 @@ class TestcontainersConfiguration {
 		return new ElasticsearchContainer(DockerImageName.parse("docker.elastic.co/elasticsearch/elasticsearch:9.0.2"))
 				.withEnv("xpack.security.enabled", "false")
 				.withEnv("xpack.security.http.ssl.enabled", "false");
-
 	}
 
 }
