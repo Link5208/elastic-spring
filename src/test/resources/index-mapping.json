@@ -1,5 +1,6 @@
 {
 	"properties": {
+		"id":{"type": "integer"},
 		"name": {"type": "text"},
 		"age": {"type": "integer"}
 	}
