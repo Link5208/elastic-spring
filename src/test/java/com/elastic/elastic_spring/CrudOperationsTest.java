@@ -44,6 +44,7 @@ public class CrudOperationsTest extends AbstractTest {
 		var list = IntStream.rangeClosed(1, 10)
 				.mapToObj(i -> this.createEmployee(i, "name-" + i, 30 + i)).toList();
 		this.employeeRepository.saveAll(list);
+		this.printAll();
 
 		Assertions.assertEquals(10, this.employeeRepository.count());
 
@@ -54,8 +55,14 @@ public class CrudOperationsTest extends AbstractTest {
 
 		list.forEach(e -> e.setAge(e.getAge() + 10));
 		this.employeeRepository.saveAll(list);
+		this.printAll();
 		this.employeeRepository.findAllById(ids)
 				.forEach(e -> Assertions.assertEquals(e.getId() + 40, e.getAge()));
+
+		this.employeeRepository.deleteAllById(ids);
+		this.printAll();
+		Assertions.assertEquals(7, this.employeeRepository.count());
+
 	}
 
 	private Employee createEmployee(int id, String name, int age) {
