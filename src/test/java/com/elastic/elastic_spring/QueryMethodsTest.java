@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.util.Streamable;
 
@@ -77,5 +78,14 @@ public class QueryMethodsTest extends AbstractTest {
 		var searchHits = this.repository.findAll(Sort.by("quantity").descending());
 		searchHits.forEach(this.print());
 		Assertions.assertEquals(8, Streamable.of(searchHits).toList().size());
+	}
+
+	@Test
+	public void findByCategoryWithPagination() {
+		var searchPage = this.repository.findByCategory("Electronics", PageRequest.of(0, 4));
+		searchPage.getSearchHits().forEach(this.print());
+		Assertions.assertEquals(1, searchPage.getNumber());
+		Assertions.assertEquals(3, searchPage.getTotalPages());
+		Assertions.assertEquals(12, searchPage.getTotalElements());
 	}
 }
