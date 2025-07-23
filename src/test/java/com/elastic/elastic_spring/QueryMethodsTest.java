@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.util.Streamable;
 
 import com.elastic.elastic_spring.entity.Product;
 import com.elastic.elastic_spring.repository.ProductRepository;
@@ -61,5 +63,19 @@ public class QueryMethodsTest extends AbstractTest {
 		var searchHits = this.repository.findByPriceLessThan(80);
 		searchHits.forEach(this.print());
 		Assertions.assertEquals(5, searchHits.getTotalHits());
+	}
+
+	@Test
+	public void findByPriceBetween() {
+		var searchHits = this.repository.findByPriceBetween(10, 120, Sort.by("price"));
+		searchHits.forEach(this.print());
+		Assertions.assertEquals(8, searchHits.getTotalHits());
+	}
+
+	@Test
+	public void findAllSortByQuantity() {
+		var searchHits = this.repository.findAll(Sort.by("quantity").descending());
+		searchHits.forEach(this.print());
+		Assertions.assertEquals(8, Streamable.of(searchHits).toList().size());
 	}
 }
