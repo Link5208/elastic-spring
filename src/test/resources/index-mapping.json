@@ -1,22 +1,10 @@
 {
   "properties": {
-    "id": {
-      "type": "integer"
-    },
-    "name": {
+    "title": {
       "type": "text"
     },
-    "brand": {
-      "type": "keyword"
-    },
-    "category": {
-      "type": "keyword"
-    },
-    "price": {
-      "type": "integer"
-    },
-    "quantity": {
-      "type": "integer"
+    "body": {
+      "type": "text"
     }
   }
 }
